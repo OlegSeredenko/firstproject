@@ -1,0 +1,13 @@
+RewriteEngine ON
+
+#RewriteRule index.php /templates/auth.php
+#Redirect /index.php /templates/auth.php
+#Redirect /templates/index.php /templates/auth.php
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php?_url=/$1 [QSA,L]
+
+php_flag display_startup_errors on
+php_flag display_errors on
+php_flag html_errors on
