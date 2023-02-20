@@ -13,7 +13,7 @@ if (!empty($_FILES['newAvatar']['name'])) {
     $path = "uploads/" . time() . $_FILES['newAvatar']['name'];
     if (!move_uploaded_file($_FILES['newAvatar']['tmp_name'], '../' . $path)) {
         $_SESSION['message'] = 'Ошибка при загрузке файла';
-        //header('Location: /register');
+        header('Location: /register');
     }
     //запрос на обновление данных в БД
     mysqli_query($connect, "UPDATE `users` SET `avatar` = '$path'  WHERE `id` = '$idEditUser'");
