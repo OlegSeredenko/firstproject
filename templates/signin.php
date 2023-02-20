@@ -27,9 +27,10 @@ if (password_verify($password, $user['password'])) {
         "avatar" => '../'. $user['avatar'],
         "email" => $user['email']
     ];
-    //если пользователь не загрузил файл, то в профиле будет отображён аватар по умолчанию
+    // если пользователь не загрузил файл, то в профиле будет отображён аватар по умолчанию
     $allowedExtensions = ['jpg', 'png', 'gif', 'JPG', 'PNG', 'GIF'];
-    $y = substr($_SESSION['user']['avatar'], -3);//вырезаем расширение из имени файла
+    // вырезаем расширение из имени файла
+    $y = substr($_SESSION['user']['avatar'], -3);
     if (!in_array($y, $allowedExtensions)) {
         $_SESSION['user'] = [
             "id" => $user['id'],

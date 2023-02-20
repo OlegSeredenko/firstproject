@@ -7,19 +7,22 @@ $login = mysqli_real_escape_string($connect, $_POST['login']);
 $email = mysqli_real_escape_string($connect, $_POST['email']);
 $password = mysqli_real_escape_string($connect, $_POST['password']);
 $password_confirm = mysqli_real_escape_string($connect, $_POST['password_confirm']);
-
-$check_login = mysqli_query($connect, "SELECT * FROM `users` WHERE `login`='$login'");/// извлекаем всю информацию из таблица по этому логину
+// извлекаем всю информацию из таблица по этому логину
+$check_login = mysqli_query($connect, "SELECT * FROM `users` WHERE `login`='$login'");
 if (mysqli_num_rows($check_login) > 0) {
-    $_SESSION['message'] = 'Данный логин уже занят';// проверка на уникальность логина
+    // проверка на уникальность логина
+    $_SESSION['message'] = 'Данный логин уже занят';
     header('Location: /register');
 } elseif (strlen($password) < 4) {
-    $_SESSION['message'] = 'Пароль слишком короткий';// проверка - пароль должен быть длиной от 4 символов
+    // проверка - пароль должен быть длиной от 4 символов
+    $_SESSION['message'] = 'Пароль слишком короткий';
     header('Location: /register');
 } elseif (!ctype_alnum($password)) {
-    $_SESSION['message'] = 'Пароль может состоять только из цифр и букв';// проверка - пароль должен состоять только из букв и цифр
+    // проверка - пароль должен состоять только из букв и цифр
+    $_SESSION['message'] = 'Пароль может состоять только из цифр и букв';
     header('Location: /register');
 } elseif ($password === $password_confirm) {
-    //проверка допустимых расширений
+    // проверка допустимых расширений
     $srcFileName = strtolower($_FILES['avatar']['name']);
     $allowedExtensions = ['jpg', 'png', 'gif', 'JPG', 'PNG', 'GIF'];
     $extension = pathinfo($srcFileName, PATHINFO_EXTENSION);
@@ -27,7 +30,7 @@ if (mysqli_num_rows($check_login) > 0) {
         $_SESSION['message'] = 'Загрузка файлов с таким расширением запрещена';
         header('Location: /register');
     } else {
-        //загрузка файла в папку
+        // загрузка файла в папку
         $path = "uploads/" . time() . $_FILES['avatar']['name'];
         if (!move_uploaded_file($_FILES['avatar']['tmp_name'], '../' . $path)) {
             $_SESSION['message'] = 'Ошибка при загрузке файла';

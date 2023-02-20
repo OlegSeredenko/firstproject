@@ -23,7 +23,8 @@ $messages = getMessages();
                                         <div><?=nl2br(htmlspecialchars($message['text']))?></div>
                                         <div><img src="<?php echo "/" . $message['img']?>" alt="" width="200" > </div>
                                         <div><?php echo $message['fullname'];?></div>
-                                        <div><a href="/templates/toBlogEdit.php" class="text-dark"><!--Редактирование постов - пока не работает--></a></div>
+                                        <div><a href="/templates/toBlogEdit.php?id=<?=$message['id']?>" class="text-dark">Редактирование</a></div>
+                                        <div><a href="/templates/toBlogDelete.php?id=<?=$message['id']?>" class="text-dark">Удаление</a></div>
                                         <hr>
                                     </div>
                                 <?php endforeach; ?>

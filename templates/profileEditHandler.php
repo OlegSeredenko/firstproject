@@ -4,8 +4,9 @@ require $_SERVER['DOCUMENT_ROOT'] . "/config/connect.php";
 
 $idEditUser = $_SESSION['user']['id'];
 
-//подготовка нового изображения пользователя
+// подготовка нового изображения пользователя
 if (!empty($_FILES['newAvatar']['name'])) {
+    unlink($_SESSION['user']['avatar']);
     $srcFileName = strtolower($_FILES['newAvatar']['name']);
     $allowedExtensions = ['jpg', 'png', 'gif', 'JPG', 'PNG', 'GIF'];
     $extension = pathinfo($srcFileName, PATHINFO_EXTENSION);
@@ -18,17 +19,17 @@ if (!empty($_FILES['newAvatar']['name'])) {
     mysqli_query($connect, "UPDATE `users` SET `avatar` = '$path'  WHERE `id` = '$idEditUser'");
     //unset($_FILES['newAvatar']);
 }
-//обновляем имя пользователя - логин останется старым (который указан при регситрации и с помощью которого происходит авторизация)
+// обновляем имя пользователя - логин останется старым (который указан при регситрации и с помощью которого происходит авторизация)
 if (!empty($_POST['newFullname'])) {
     $newFullname = $_POST['newFullname'];
     mysqli_query($connect, "UPDATE `users` SET `fullname` = '$newFullname'  WHERE `id` = '$idEditUser'");
 }
-//обновляем почту пользователя
+// обновляем почту пользователя
 if (!empty($_POST['newEmail'])) {
     $newEmail = $_POST['newEmail'];
     mysqli_query($connect, "UPDATE `users` SET `email` = '$newEmail'  WHERE `id` = '$idEditUser'");
 }
-//обновляем изображение профиля и перенаправляем на страницу профиля
+// обновляем изображение профиля и перенаправляем на страницу профиля
 $check_user = mysqli_query($connect, "SELECT * FROM `users` WHERE `id` = '$idEditUser'");
 if (mysqli_num_rows($check_user) > 0) {
     $user = mysqli_fetch_assoc($check_user);
