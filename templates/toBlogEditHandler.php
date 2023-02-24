@@ -12,12 +12,22 @@ if (!empty($_POST['titleBlogEdit'])) {
 }
 // обновляем почту пользователя
 if (!empty($_POST['textareaBlogEdit'])) {
-    mysqli_query($connect, "UPDATE `posts` SET `email` = '$textareaBlogEdit'  WHERE `id` = '$post_idEdit'");
+    mysqli_query($connect, "UPDATE `posts` SET `text` = '$textareaBlogEdit'  WHERE `id` = '$post_idEdit'");
 }
 
 
+
 if (!empty($_FILES['imageBlogEdit']['tmp_name'])) {
-    //unlink("/" . $getMessageBlogForEdit[0]['img']); как удалить картинку
+    //unlink('../' . $getMessageBlogForEdit[0]['img']); // как удалить картинку
+    /*
+    $getMessageBlogForEdit = getMessageBlogForEdit($post_idEdit);
+    $v = $getMessageBlogForEdit[0]['img'];
+    global $v;
+    //var_dump(dirname(__FILE__) );
+    //unlink(dirname(__FILE__) . '/' . $v);
+    unlink('/' . $v);
+    */
+
     $img = $_FILES['imageBlogEdit']['tmp_name'];
 
     // получение расширения и размера изображения
@@ -46,21 +56,21 @@ if (!empty($_FILES['imageBlogEdit']['tmp_name'])) {
         case 'image/jpeg':
             $pathB = "uploadsBlog/" . time() . $_FILES['imageBlogEdit']['name'];
             if (!imagejpeg($dest, '../' . $pathB)) {
-                $_SESSION['message'] = 'Ошибка при загрузке файла';
+                $_SESSION['messmessageFromBlogage'] = 'Ошибка при загрузке файла';
                 header('Location: /toBlog');
             }
             mysqli_query($connect, "UPDATE `posts` SET `img` = '$pathB'  WHERE `id` = '$post_idEdit'");
         case 'image/gif':
             $pathB = "uploadsBlog/" . time() . $_FILES['imageBlogEdit']['name'];
             if (!imagegif($dest, '../' . $pathB)) {
-                $_SESSION['message'] = 'Ошибка при загрузке файла';
+                $_SESSION['messageFromBlog'] = 'Ошибка при загрузке файла';
                 header('Location: /toBlog');
             }
             mysqli_query($connect, "UPDATE `posts` SET `img` = '$pathB'  WHERE `id` = '$post_idEdit'");
         case 'image/png':
             $pathB = "uploadsBlog/" . time() . $_FILES['imageBlogEdit']['name'];
             if (!imagepng($dest, '../' . $pathB)) {
-                $_SESSION['message'] = 'Ошибка при загрузке файла';
+                $_SESSION['messageFromBlog'] = 'Ошибка при загрузке файла';
                 header('Location: /toBlog');
             }
             mysqli_query($connect, "UPDATE `posts` SET `img` = '$pathB'  WHERE `id` = '$post_idEdit'");

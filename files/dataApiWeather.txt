@@ -1,1 +1,1 @@
-a:5:{s:3:"sky";s:4:"mist";s:4:"temp";d:0.53;s:10:"feels_like";d:-1.84;s:8:"pressure";d:761.44;s:8:"humidity";i:100;}
+a:5:{s:3:"sky";s:9:"clear sky";s:4:"temp";d:5.53;s:10:"feels_like";d:2.51;s:8:"pressure";d:764.44;s:8:"humidity";i:54;}

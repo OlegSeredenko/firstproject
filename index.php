@@ -2,8 +2,17 @@
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
+/*
+var_dump($_SESSION['user']['avatar']);
+require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/functions.php';
+$getMessageBlogForEdit = getMessageBlogForEdit(49);
+$x = $getMessageBlogForEdit[0]['img'];
+unlink(dirname(__FILE__) . '/' . $x);
+var_dump($getMessageBlogForEdit[0]['img']);
+*/
+require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/functions.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/connect.php';
+
 
 //то же самое для страницы с блогом
 if ($_SERVER['REQUEST_URI'] == '/toBlogShow') {

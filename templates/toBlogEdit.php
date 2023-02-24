@@ -18,7 +18,10 @@ $getMessageBlogForEdit = getMessageBlogForEdit($_GET['id']);
                     <div class="col-md">
                         <form action="/templates/toBlogEditHandler.php" method="post" enctype="multipart/form-data">
                             <div><?php if (!isset($_SESSION['user'])) {
-                            echo '<p class="msg">' . "Записи в блог могут оставлять только авторизированные пользователи" . '</p>';}?></div>
+                            echo '<p class="msg">' . "Редактировать записи в блоге могут только авторизированные пользователи" . '</p>';}
+                            if ($_SESSION['user']['id'] != $getMessageBlogForEdit[0]['userId']) {
+                                echo '<p class="msg">' . "Разрешено редактировать только свои записи в блоге" . '</p>';}
+                            ?></div>
                             <div class="mb-4">
                             <label class="form-label" >Заголовок вашего поста</label>
                             <input type="text" name="titleBlogEdit" placeholder="Введите заговолок" class="form-control" value="<?=$getMessageBlogForEdit[0]['title']?>">
@@ -36,9 +39,11 @@ $getMessageBlogForEdit = getMessageBlogForEdit($_GET['id']);
                                 <?php $_SESSION['id'] = $_GET['id']?>
                             </div>
                             <div class="mb-4">
-                            <button type="submit" class="btn btn-secondary btn-lg btn-block">Отправить пост</button>
+                                <?php if ($_SESSION['user']['id'] == $getMessageBlogForEdit[0]['userId']) {
+                                    ?> <button type="submit" class="btn btn-secondary btn-lg btn-block">Отправить пост</button> <?php
+                                } ?>
                             </div>
-                            <?php
+                            <?php 
                                 if (isset($_SESSION['messageFromBlog'])) {
                                     echo ' <p class="msg"> ' . $_SESSION['messageFromBlog'] . ' </p>' ;
                                 }

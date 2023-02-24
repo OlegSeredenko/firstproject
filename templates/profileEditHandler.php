@@ -17,7 +17,6 @@ if (!empty($_FILES['newAvatar']['name'])) {
     }
     //запрос на обновление данных в БД
     mysqli_query($connect, "UPDATE `users` SET `avatar` = '$path'  WHERE `id` = '$idEditUser'");
-    //unset($_FILES['newAvatar']);
 }
 // обновляем имя пользователя - логин останется старым (который указан при регситрации и с помощью которого происходит авторизация)
 if (!empty($_POST['newFullname'])) {
