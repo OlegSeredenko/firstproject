@@ -1,6 +1,6 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/apiExchange.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/apiWeather.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/api/apiExchange.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/api/apiWeather.php';
 
 ?>
 <!doctype html>

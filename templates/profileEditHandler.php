@@ -6,7 +6,9 @@ $idEditUser = $_SESSION['user']['id'];
 
 // подготовка нового изображения пользователя
 if (!empty($_FILES['newAvatar']['name'])) {
-    unlink($_SESSION['user']['avatar']);
+    if (isset($_SESSION['user']['avatar'])) {
+        unlink($_SESSION['user']['avatar']);
+    }
     $srcFileName = strtolower($_FILES['newAvatar']['name']);
     $allowedExtensions = ['jpg', 'png', 'gif', 'JPG', 'PNG', 'GIF'];
     $extension = pathinfo($srcFileName, PATHINFO_EXTENSION);
@@ -16,27 +18,59 @@ if (!empty($_FILES['newAvatar']['name'])) {
         header('Location: /register');
     }
     //запрос на обновление данных в БД
-    mysqli_query($connect, "UPDATE `users` SET `avatar` = '$path'  WHERE `id` = '$idEditUser'");
+    try {
+        global $pdo;
+        $sql = "UPDATE `users` SET `avatar` = '$path'  WHERE `id` = '$idEditUser'";
+        $affectedRowsNumber = $pdo->exec($sql);
+        echo "Обновлено строк: $affectedRowsNumber";
+    }
+    catch (PDOException $e) {
+        echo "Database error: " . $e->getMessage();
+    }
+    unset($sql);
 }
 // обновляем имя пользователя - логин останется старым (который указан при регситрации и с помощью которого происходит авторизация)
 if (!empty($_POST['newFullname'])) {
     $newFullname = $_POST['newFullname'];
-    mysqli_query($connect, "UPDATE `users` SET `fullname` = '$newFullname'  WHERE `id` = '$idEditUser'");
+    try {
+        global $pdo;
+        $sql = "UPDATE `users` SET `fullname` = '$newFullname'  WHERE `id` = '$idEditUser'";
+        $affectedRowsNumber = $pdo->exec($sql);
+        echo "Обновлено строк: $affectedRowsNumber";
+    }
+    catch (PDOException $e) {
+        echo "Database error: " . $e->getMessage();
+    }
+    unset($sql);
 }
 // обновляем почту пользователя
 if (!empty($_POST['newEmail'])) {
     $newEmail = $_POST['newEmail'];
-    mysqli_query($connect, "UPDATE `users` SET `email` = '$newEmail'  WHERE `id` = '$idEditUser'");
+    try {
+        global $pdo;
+        $sql = "UPDATE `users` SET `email` = '$newEmail'  WHERE `id` = '$idEditUser'";
+        $affectedRowsNumber = $pdo->exec($sql);
+        echo "Обновлено строк: $affectedRowsNumber";
+    }
+    catch (PDOException $e) {
+        echo "Database error: " . $e->getMessage();
+    }
+    unset($sql);
 }
 // обновляем изображение профиля и перенаправляем на страницу профиля
-$check_user = mysqli_query($connect, "SELECT * FROM `users` WHERE `id` = '$idEditUser'");
-if (mysqli_num_rows($check_user) > 0) {
-    $user = mysqli_fetch_assoc($check_user);
-    $_SESSION['user'] = [
-        "id" => $user['id'],
-        "fullname" => $user['fullname'],
-        "avatar" => '../'. $user['avatar'],
-        "email" => $user['email']
-    ];
-    header('Location: /profile');
+global $pdo;
+$stmt = $pdo->prepare("SELECT * FROM `users` WHERE `id` = ?");
+$stmt->execute([$idEditUser]);
+$arr = [];
+while ($row = $stmt->fetch())
+{
+    $arr[] = $row;
 }
+$_SESSION['user'] = [
+    "id" => $arr[0]['id'],
+    "fullname" => $arr[0]['fullname'],
+    "avatar" => '../'. $arr[0]['avatar'],
+    "email" => $arr[0]['email']
+];
+unset($stmt);
+header('Location: /profile');

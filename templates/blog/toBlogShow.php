@@ -4,6 +4,13 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/functions.php';
 
 $messages = getMessages();
 
+if (isset($_GET['delete'])) {
+    $deleteId = (int)$_GET['delete'];
+    blogDelete($deleteId);
+    header('Location: /toBlogShow');
+    die();
+}
+
 ?>
 <!doctype html>
 <html lang="ru">
@@ -14,7 +21,7 @@ $messages = getMessages();
             <div class="container">
                 <div class="row">
                     <div class="col-md">
-                        <form action="/templates/toBlogHandler.php" method="post" enctype="multipart/form-data">
+                        <form action="/templates/blog/toBlogHandler.php" method="post" enctype="multipart/form-data">
                             <div class="mb-4">
                             <?php if (!empty($messages)) : ?>
                                 <?php foreach ($messages as $message) : ?>
@@ -23,8 +30,11 @@ $messages = getMessages();
                                         <div><?=nl2br(htmlspecialchars($message['text']))?></div>
                                         <div><img src="<?php echo "/" . $message['img']?>" alt="" width="200" > </div>
                                         <div><?php echo $message['fullname'];?></div>
-                                        <div><a href="/templates/toBlogEdit.php?id=<?=$message['id']?>" class="text-dark">Редактирование</a></div>
-                                        <div><a href="/templates/toBlogDelete.php?id=<?=$message['id']?>" class="text-dark">Удаление</a></div>
+                                        <div><a href="/templates/blog/toBlogEdit.php?id=<?=$message['id']?>" class="text-dark">Редактирование</a></div>
+                                        <div>
+                                            <a href="javascript:void(0)" onclick="if(confirm('Вы хотите удалить?'))
+                                        {location.href = '/templates/blog/toBlogShow.php?delete=<?=$message['id']?>'}" class="text-dark">Удаление</a>
+                                        </div>
                                         <hr>
                                     </div>
                                 <?php endforeach; ?>

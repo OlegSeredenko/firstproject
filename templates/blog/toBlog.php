@@ -10,9 +10,8 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/config/connect.php';
         <main>
             <div class="container">
                 <div class="row">
-
                     <div class="col-md">
-                        <form action="/templates/toBlogHandler.php" method="post" enctype="multipart/form-data">
+                        <form action="/templates/blog/toBlogHandler.php" method="post" enctype="multipart/form-data">
                             <div><?php if (!isset($_SESSION['user'])) {
                             echo '<p class="msg">' . "Записи в блог могут оставлять только авторизированные пользователи" . '</p>';}?></div>
                             <div class="mb-4">

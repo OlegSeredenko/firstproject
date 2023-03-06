@@ -14,21 +14,22 @@ $getMessageBlogForEdit = getMessageBlogForEdit($_GET['id']);
         <main>
             <div class="container">
                 <div class="row">
-
                     <div class="col-md">
-                        <form action="/templates/toBlogEditHandler.php" method="post" enctype="multipart/form-data">
+                        <form action="/templates/blog/toBlogEditHandler.php" method="post" enctype="multipart/form-data">
                             <div><?php if (!isset($_SESSION['user'])) {
                             echo '<p class="msg">' . "Редактировать записи в блоге могут только авторизированные пользователи" . '</p>';}
-                            if ($_SESSION['user']['id'] != $getMessageBlogForEdit[0]['userId']) {
+                            elseif ($_SESSION['user']['id'] != $getMessageBlogForEdit[0]['userId']) {
                                 echo '<p class="msg">' . "Разрешено редактировать только свои записи в блоге" . '</p>';}
                             ?></div>
                             <div class="mb-4">
                             <label class="form-label" >Заголовок вашего поста</label>
-                            <input type="text" name="titleBlogEdit" placeholder="Введите заговолок" class="form-control" value="<?=$getMessageBlogForEdit[0]['title']?>">
+                            <input type="text" name="titleBlogEdit" placeholder="Введите заговолок" class="form-control" 
+                            value="<?=$getMessageBlogForEdit[0]['title']?>">
                             </div>    
                             <div class="mb-4">
                             <label for="text">Текст:</label><br>
-			                <textarea type="text" name="textareaBlogEdit" placeholder="Введите ваш текст" class="form-control" rows="15" cols="45"><?=$getMessageBlogForEdit[0]['text']?></textarea>
+			                <textarea type="text" name="textareaBlogEdit" placeholder="Введите ваш текст" class="form-control" 
+                            rows="15" cols="45"><?=$getMessageBlogForEdit[0]['text']?></textarea>
                             </div>
                             <div class="mb-4">
                             <img src="<?="/" . $getMessageBlogForEdit[0]['img']?>" alt="" width="200" ><br>
@@ -39,7 +40,7 @@ $getMessageBlogForEdit = getMessageBlogForEdit($_GET['id']);
                                 <?php $_SESSION['id'] = $_GET['id']?>
                             </div>
                             <div class="mb-4">
-                                <?php if ($_SESSION['user']['id'] == $getMessageBlogForEdit[0]['userId']) {
+                                <?php if (isset($_SESSION['user']) && $_SESSION['user']['id'] == $getMessageBlogForEdit[0]['userId']) {
                                     ?> <button type="submit" class="btn btn-secondary btn-lg btn-block">Отправить пост</button> <?php
                                 } ?>
                             </div>

@@ -2,36 +2,28 @@
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-/*
-var_dump($_SESSION['user']['avatar']);
-require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/functions.php';
-$getMessageBlogForEdit = getMessageBlogForEdit(49);
-$x = $getMessageBlogForEdit[0]['img'];
-unlink(dirname(__FILE__) . '/' . $x);
-var_dump($getMessageBlogForEdit[0]['img']);
-*/
+
 require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/functions.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/connect.php';
 
-
 //то же самое для страницы с блогом
 if ($_SERVER['REQUEST_URI'] == '/toBlogShow') {
-    require_once 'templates/toBlogShow.php';
+    require_once 'templates/blog/toBlogShow.php';
     die();
 }
 //то же самое для страницы для записей для блога
 if ($_SERVER['REQUEST_URI'] == '/toBlog') {
-    require_once 'templates/toBlog.php';
+    require_once 'templates/blog/toBlog.php';
     die();
 }
 //то же самое для страницы обратной связи
 if ($_SERVER['REQUEST_URI'] == '/feedback') {
-    require_once 'templates/feedback.php';
+    require_once 'templates/feedback/feedback.php';
     die();
 }
 //то же самое для погоды и валюты
 if ($_SERVER['REQUEST_URI'] == '/apiShow') {
-    require_once 'templates/apiShow.php';
+    require_once 'templates/api/apiShow.php';
     die();
 }
 //то же самое для страницы регистрации

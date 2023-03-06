@@ -1,9 +1,4 @@
 <?php
-//почему-то если раскомментировать 3 строки ниже, то происходит зацикливание (потом проверю)
-/*
-if (isset($_SESSION['user'])) {
-    header('Location: /profileEdit');
-}*/
 
 ?>
 <!doctype html>
@@ -18,7 +13,6 @@ if (isset($_SESSION['user'])) {
                         <!--Один из трех столбцов-->
                     </div>
                     <div class="col-md">
-
                             <div class="mb-4">
                             <form action="/templates/profileEditHandler.php" method="post" enctype="multipart/form-data" >
                                 <div><h3>Редактирование профиля</h3></div>
@@ -43,7 +37,6 @@ if (isset($_SESSION['user'])) {
                                 <a href="/templates/logout.php" class="logout text-dark" >Выход</a>
                             </div>
                             </form>
-
                     </div>
                     <div class="col-md">
                         <!--Один из трех столбцов-->

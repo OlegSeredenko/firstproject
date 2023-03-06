@@ -9,8 +9,8 @@ if (!isset($_SESSION['user'])) {
     die();
 }
 
-$titleBlog = mysqli_real_escape_string($connect, $_POST['titleBlog']);
-$textareaBlog = mysqli_real_escape_string($connect, $_POST['textareaBlog']);
+$titleBlog = $_POST['titleBlog'];
+$textareaBlog = $_POST['textareaBlog'];
 $user_id = $_SESSION['user']['id'];
 //сообщение об ошибке, если пользователь не загрузит изображение
 if (empty($_FILES['imageBlog']['tmp_name'])) {
@@ -46,29 +46,59 @@ imagecopyresampled($dest, $src, 0, 0, 0, 0, $size_img[0], $size_img[1], $size_im
 switch ($size_img['mime']) {
     case 'image/jpeg':
         $pathB = "uploadsBlog/" . time() . $_FILES['imageBlog']['name'];
-        if (!imagejpeg($dest, '../' . $pathB)) {
+        if (!imagejpeg($dest, '../../' . $pathB)) {
             $_SESSION['message'] = 'Ошибка при загрузке файла';
             header('Location: /toBlog');
         }
-        mysqli_query($connect, "INSERT INTO `posts` (id, title, text, insertedOn, userId, img) VALUES (NULL, '$titleBlog', '$textareaBlog', NOW(), $user_id, '$pathB' )");
+        try {
+            global $pdo;
+            $sql = "INSERT INTO `posts` (id, title, text, insertedOn, userId, img) 
+            VALUES (NULL, '$titleBlog', '$textareaBlog', NOW(), $user_id, '$pathB' )";
+            $affectedRowsNumber = $pdo->exec($sql);
+            unset($sql);
+            echo "Обновлено строк: $affectedRowsNumber";
+        }
+        catch (PDOException $e) {
+            echo "Database error: " . $e->getMessage();
+        }
         header('Location: /toBlogShow');
         break;
     case 'image/gif':
         $pathB = "uploadsBlog/" . time() . $_FILES['imageBlog']['name'];
-        if (!imagegif($dest, '../' . $pathB)) {
+        if (!imagegif($dest, '../../' . $pathB)) {
             $_SESSION['message'] = 'Ошибка при загрузке файла';
             header('Location: /toBlog');
         }
-        mysqli_query($connect, "INSERT INTO `posts` (id, title, text, insertedOn, userId, img) VALUES (NULL, '$titleBlog', '$textareaBlog', NOW(), $user_id, '$pathB' )");
+        try {
+            global $pdo;
+            $sql = "INSERT INTO `posts` (id, title, text, insertedOn, userId, img) 
+            VALUES (NULL, '$titleBlog', '$textareaBlog', NOW(), $user_id, '$pathB' )";
+            $affectedRowsNumber = $pdo->exec($sql);
+            unset($sql);
+            echo "Обновлено строк: $affectedRowsNumber";
+        }
+        catch (PDOException $e) {
+            echo "Database error: " . $e->getMessage();
+        }
         header('Location: /toBlogShow');
         break;
     case 'image/png':
         $pathB = "uploadsBlog/" . time() . $_FILES['imageBlog']['name'];
-        if (!imagepng($dest, '../' . $pathB)) {
+        if (!imagepng($dest, '../../' . $pathB)) {
             $_SESSION['message'] = 'Ошибка при загрузке файла';
             header('Location: /toBlog');
         }
-        mysqli_query($connect, "INSERT INTO `posts` (id, title, text, insertedOn, userId, img) VALUES (NULL, '$titleBlog', '$textareaBlog', NOW(), $user_id, '$pathB' )");
+        try {
+            global $pdo;
+            $sql = "INSERT INTO `posts` (id, title, text, insertedOn, userId, img) 
+            VALUES (NULL, '$titleBlog', '$textareaBlog', NOW(), $user_id, '$pathB' )";
+            $affectedRowsNumber = $pdo->exec($sql);
+            unset($sql);
+            echo "Обновлено строк: $affectedRowsNumber";
+        }
+        catch (PDOException $e) {
+            echo "Database error: " . $e->getMessage();
+        }
         header('Location: /toBlogShow');
         break;
 }

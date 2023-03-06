@@ -2,14 +2,23 @@
 session_start();
 require $_SERVER['DOCUMENT_ROOT'] . "/config/connect.php";
 
-$fullname = mysqli_real_escape_string($connect, $_POST['fullname']);
-$login = mysqli_real_escape_string($connect, $_POST['login']);
-$email = mysqli_real_escape_string($connect, $_POST['email']);
-$password = mysqli_real_escape_string($connect, $_POST['password']);
-$password_confirm = mysqli_real_escape_string($connect, $_POST['password_confirm']);
+$fullname = $_POST['fullname'];
+$login = $_POST['login'];
+$email = $_POST['email'];
+$password = $_POST['password'];
+$password_confirm = $_POST['password_confirm'];
 // извлекаем всю информацию из таблица по этому логину
-$check_login = mysqli_query($connect, "SELECT * FROM `users` WHERE `login`='$login'");
-if (mysqli_num_rows($check_login) > 0) {
+global $pdo;
+$stmt = $pdo->prepare("SELECT * FROM `users` WHERE `login`= ?");
+$stmt->execute([$login]);
+$check_login = [];
+while ($row = $stmt->fetch())
+{
+    $check_login[] = $row;
+}
+unset($stmt);
+
+if (!empty($check_login)) {
     // проверка на уникальность логина
     $_SESSION['message'] = 'Данный логин уже занят';
     header('Location: /register');
@@ -38,8 +47,17 @@ if (mysqli_num_rows($check_login) > 0) {
         }
         $password = password_hash($password, PASSWORD_DEFAULT);
 
-        mysqli_query($connect, "INSERT INTO `users` (`id`, `fullname`, `login`, `email`, `password`, `avatar`) 
-        VALUES (NULL, '$fullname', '$login', '$email', '$password', '$path')");
+        try {
+            global $pdo;
+            $sql = "INSERT INTO `users` (`id`, `fullname`, `login`, `email`, `password`, `avatar`) 
+            VALUES (NULL, '$fullname', '$login', '$email', '$password', '$path')";
+            $affectedRowsNumber = $pdo->exec($sql);
+            unset($sql);
+            echo "Обновлено строк: $affectedRowsNumber";
+        }
+        catch (PDOException $e) {
+            echo "Database error: " . $e->getMessage();
+        }
         $_SESSION['message'] = 'Регистрация прошла успешно';
         header('Location: /profile');
     }
