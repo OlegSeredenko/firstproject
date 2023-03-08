@@ -35,6 +35,14 @@ if (!isset($_SESSION['user'])) {
                 </div>
             </div>
         </main>
+        <script>
+        window.yaContextCb.push(()=>{
+            Ya.Context.AdvManager.render({
+            renderTo: 'yandex_rtb_R-I-677833-1',
+            blockId: 'R-I-677833-1'
+            })
+        })
+        </script>
         <?php require $_SERVER['DOCUMENT_ROOT'] . "/templates/footer.php"?>
     </body>
 </html>

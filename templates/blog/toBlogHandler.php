@@ -52,13 +52,17 @@ switch ($size_img['mime']) {
         }
         try {
             global $pdo;
-            $sql = "INSERT INTO `posts` (id, title, text, insertedOn, userId, img) 
-            VALUES (NULL, '$titleBlog', '$textareaBlog', NOW(), $user_id, '$pathB' )";
-            $affectedRowsNumber = $pdo->exec($sql);
-            unset($sql);
-            echo "Обновлено строк: $affectedRowsNumber";
-        }
-        catch (PDOException $e) {
+            $params = [
+                'title' => $titleBlog,
+                'text' => $textareaBlog,
+                'user_Id' => $user_id,
+                'pathB' => $pathB,
+            ];
+            $stmt = $pdo->prepare("INSERT INTO `posts` (id, title, text, insertedOn, userId, img) 
+            VALUES (NULL, :title , :text , NOW(), :user_Id, :pathB )");
+            $stmt->execute($params);
+            echo "Обновлено строк: " . $stmt->rowCount();
+        } catch (PDOException $e) {
             echo "Database error: " . $e->getMessage();
         }
         header('Location: /toBlogShow');
@@ -71,13 +75,17 @@ switch ($size_img['mime']) {
         }
         try {
             global $pdo;
-            $sql = "INSERT INTO `posts` (id, title, text, insertedOn, userId, img) 
-            VALUES (NULL, '$titleBlog', '$textareaBlog', NOW(), $user_id, '$pathB' )";
-            $affectedRowsNumber = $pdo->exec($sql);
-            unset($sql);
-            echo "Обновлено строк: $affectedRowsNumber";
-        }
-        catch (PDOException $e) {
+            $params = [
+                'title' => $titleBlog,
+                'text' => $textareaBlog,
+                'user_Id' => $user_id,
+                'pathB' => $pathB,
+            ];
+            $stmt = $pdo->prepare("INSERT INTO `posts` (id, title, text, insertedOn, userId, img) 
+            VALUES (NULL, :title , :text , NOW(), :user_Id, :pathB )");
+            $stmt->execute($params);
+            echo "Обновлено строк: " . $stmt->rowCount();
+        } catch (PDOException $e) {
             echo "Database error: " . $e->getMessage();
         }
         header('Location: /toBlogShow');
@@ -90,13 +98,17 @@ switch ($size_img['mime']) {
         }
         try {
             global $pdo;
-            $sql = "INSERT INTO `posts` (id, title, text, insertedOn, userId, img) 
-            VALUES (NULL, '$titleBlog', '$textareaBlog', NOW(), $user_id, '$pathB' )";
-            $affectedRowsNumber = $pdo->exec($sql);
-            unset($sql);
-            echo "Обновлено строк: $affectedRowsNumber";
-        }
-        catch (PDOException $e) {
+            $params = [
+                'title' => $titleBlog,
+                'text' => $textareaBlog,
+                'user_Id' => $user_id,
+                'pathB' => $pathB,
+            ];
+            $stmt = $pdo->prepare("INSERT INTO `posts` (id, title, text, insertedOn, userId, img) 
+            VALUES (NULL, :title , :text , NOW(), :user_Id, :pathB )");
+            $stmt->execute($params);
+            echo "Обновлено строк: " . $stmt->rowCount();
+        } catch (PDOException $e) {
             echo "Database error: " . $e->getMessage();
         }
         header('Location: /toBlogShow');

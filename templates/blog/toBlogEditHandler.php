@@ -11,24 +11,28 @@ $post_idEdit = $_SESSION['id'];
 if (!empty($_POST['titleBlogEdit'])) {
     try {
         global $pdo;
-        $sql = "UPDATE `posts` SET `title` = '$titleBlogEdit'  WHERE `id` = '$post_idEdit'";
-        $affectedRowsNumber = $pdo->exec($sql);
-        unset($sql);
-        echo "Обновлено строк: $affectedRowsNumber";
-    }
-    catch (PDOException $e) {
+        $params = [
+            'title' => $titleBlogEdit,
+            'id' => $post_idEdit,
+        ];
+        $stmt = $pdo->prepare("UPDATE `posts` SET `title` = :title  WHERE `id` = :id");
+        $stmt->execute($params);
+        echo "Обновлено строк: " . $stmt->rowCount();
+    } catch (PDOException $e) {
         echo "Database error: " . $e->getMessage();
     }
 }
 if (!empty($_POST['textareaBlogEdit'])) {
     try {
         global $pdo;
-        $sql = "UPDATE `posts` SET `text` = '$textareaBlogEdit'  WHERE `id` = '$post_idEdit'";
-        $affectedRowsNumber = $pdo->exec($sql);
-        unset($sql);
-        echo "Обновлено строк: $affectedRowsNumber";
-    }
-    catch (PDOException $e) {
+        $params = [
+            'text' => $textareaBlogEdit,
+            'id' => $post_idEdit,
+        ];
+        $stmt = $pdo->prepare("UPDATE `posts` SET `text` = :text  WHERE `id` = :id");
+        $stmt->execute($params);
+        echo "Обновлено строк: " . $stmt->rowCount();
+    } catch (PDOException $e) {
         echo "Database error: " . $e->getMessage();
     }
 }
@@ -69,11 +73,14 @@ if (!empty($_FILES['imageBlogEdit']['tmp_name'])) {
             }
             try {
                 global $pdo;
-                $sql = "UPDATE `posts` SET `img` = '$pathB'  WHERE `id` = '$post_idEdit'";
-                $affectedRowsNumber = $pdo->exec($sql);
-                echo "Обновлено строк: $affectedRowsNumber";
-            }
-            catch (PDOException $e) {
+                $params = [
+                    'img' => $pathB,
+                    'id' => $post_idEdit,
+                ];
+                $stmt = $pdo->prepare("UPDATE `posts` SET `img` = :img  WHERE `id` = :id");
+                $stmt->execute($params);
+                echo "Обновлено строк: " . $stmt->rowCount();
+            } catch (PDOException $e) {
                 echo "Database error: " . $e->getMessage();
             }
         case 'image/gif':
@@ -84,11 +91,14 @@ if (!empty($_FILES['imageBlogEdit']['tmp_name'])) {
             }
             try {
                 global $pdo;
-                $sql = "UPDATE `posts` SET `img` = '$pathB'  WHERE `id` = '$post_idEdit'";
-                $affectedRowsNumber = $pdo->exec($sql);
-                echo "Обновлено строк: $affectedRowsNumber";
-            }
-            catch (PDOException $e) {
+                $params = [
+                    'img' => $pathB,
+                    'id' => $post_idEdit,
+                ];
+                $stmt = $pdo->prepare("UPDATE `posts` SET `img` = :img  WHERE `id` = :id");
+                $stmt->execute($params);
+                echo "Обновлено строк: " . $stmt->rowCount();
+            } catch (PDOException $e) {
                 echo "Database error: " . $e->getMessage();
             }
         case 'image/png':
@@ -99,11 +109,14 @@ if (!empty($_FILES['imageBlogEdit']['tmp_name'])) {
             }
             try {
                 global $pdo;
-                $sql = "UPDATE `posts` SET `img` = '$pathB'  WHERE `id` = '$post_idEdit'";
-                $affectedRowsNumber = $pdo->exec($sql);
-                echo "Обновлено строк: $affectedRowsNumber";
-            }
-            catch (PDOException $e) {
+                $params = [
+                    'img' => $pathB,
+                    'id' => $post_idEdit,
+                ];
+                $stmt = $pdo->prepare("UPDATE `posts` SET `img` = :img  WHERE `id` = :id");
+                $stmt->execute($params);
+                echo "Обновлено строк: " . $stmt->rowCount();
+            } catch (PDOException $e) {
                 echo "Database error: " . $e->getMessage();
             }
     }
