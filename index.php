@@ -6,6 +6,8 @@ ini_set('display_errors', 1);
 require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/functions.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/connect.php';
 
+$url = strtok($_SERVER['REQUEST_URI'], '?');
+var_dump($_SERVER['REQUEST_URI']);
 //то же самое для страницы с блогом
 if ($_SERVER['REQUEST_URI'] == '/toBlogShow') {
     require_once 'templates/blog/toBlogShow.php';
@@ -14,6 +16,11 @@ if ($_SERVER['REQUEST_URI'] == '/toBlogShow') {
 //то же самое для страницы для записей для блога
 if ($_SERVER['REQUEST_URI'] == '/toBlog') {
     require_once 'templates/blog/toBlog.php';
+    die();
+}
+//то же самое для страницы для записей для блога
+if ($url == '/toBlogEdit') {
+    require_once 'templates/blog/toBlogEdit.php';
     die();
 }
 //то же самое для страницы обратной связи

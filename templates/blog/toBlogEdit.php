@@ -1,8 +1,4 @@
 <?php
-session_start();
-
-require_once $_SERVER['DOCUMENT_ROOT'] . '/config/connect.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/functions.php';
 $getMessageBlogForEdit = getMessageBlogForEdit($_GET['id']);
 
 ?>
